@@ -3,13 +3,4 @@
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
 	xmlns="*" 
 	xmlns:flexunit="flexunit.flexui.*"
-	initialize="onInitialize()">
-	
-	<mx:Script>
-		<![CDATA[
-			private function onInitialize():void {
-				testSuite = new FlexspecTestSuite();
-			}
-		]]>
-	</mx:Script>
-</FlexUnitTestRunnerApplication>
+	testSuite="{new FlexspecTestSuite()}"/>
