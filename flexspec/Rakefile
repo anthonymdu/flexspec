@@ -1,4 +1,4 @@
-Dir["#{File.dirname(__FILE__)}/spec/tasks/**/*.rake"].sort.each { |ext| load ext }
+Dir["#{File.dirname(__FILE__)}/tasks/**/*.rake"].sort.each { |ext| load ext }
 
 flexspec_config.repo_location = File.expand_path('../.git')
 

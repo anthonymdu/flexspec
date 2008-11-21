@@ -22,10 +22,6 @@ namespace :test do
       ErbHelper.write('TestRunner.mxml.erb', test_config.test_runner_file, binding)
     end
   end
-
-  def test_config
-    TestConfig.instance
-  end
 end
 
 class ErbHelper
@@ -71,6 +67,10 @@ class TestConfig
   def test_suite_dir
     @test_suite_dir || test_dir
   end
+end
+
+def test_config
+  TestConfig.instance
 end
 
 class Project
