@@ -37,7 +37,7 @@ class FlexspecConfig
   include Singleton
 
   {:install_location => 'spec',
-   :repo_location => 'git://github.com/moneypools/funfx.git',
+   :repo_location => 'git://github.com/moneypools/flexspec.git',
    :local_cache => File.join('tmp', 'flexspec'),
    :files_of_interest => [File.join('flexspec', 'tasks')]}.each_pair do |setting, default|
 
