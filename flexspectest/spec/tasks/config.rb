@@ -9,6 +9,7 @@ module Rake
 
       def initialize(attribute, options)
         @attribute = attribute
+        @default = options[:default]
         @name = options.fetch(:name, attribute).to_s
         @message = options.fetch(:message, "Must specify #{attribute} with #{name}=")
         @required = options.fetch(:required, true)
