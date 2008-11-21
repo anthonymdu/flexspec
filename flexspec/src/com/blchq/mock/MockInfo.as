@@ -33,7 +33,7 @@ package com.blchq.mock {
 		
 		private function invokeMethod(methodOrProp:*, args:Array):* {
 			if (methodOrProp is Function) {
-				methodOrProp.apply(objectBeingMocked, args);
+				return methodOrProp.apply(objectBeingMocked, args);
 			} else {
 				return methodOrProp;
 			}
