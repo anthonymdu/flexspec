@@ -33,32 +33,7 @@ package com.blchq.mock {
 		
 		private function invokeMethod(methodOrProp:*, args:Array):* {
 			if (methodOrProp is Function) {
-				// this is ugly, but I don't know a way in ActionScript to
-				// expand out an array and pass it during a method call. What I want is the
-				// ActionScript equivalent of this ruby:
-				// def method(methodOrProp, *args)
-				//    methodOrProp(*args)
-				// end
-				switch (args.length) {
-					case 0:
-						return methodOrProp();
-					case 1:
-						return methodOrProp(args[0]);
-					case 2:
-						return methodOrProp(args[0], args[1]);
-					case 3:
-						return methodOrProp(args[0], args[1], args[2]);
-					case 4:
-						return methodOrProp(args[0], args[1], args[2], args[3]);
-					case 5:
-						return methodOrProp(args[0], args[1], args[2], args[3], args[4]);
-					case 6:
-						return methodOrProp(args[0], args[1], args[2], args[3], args[4], args[5]);
-					case 7:
-						return methodOrProp(args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
-					default:
-						return methodOrProp(args); // TODO: test this case, probably isn't right
-				}
+				methodOrProp.apply(objectBeingMocked, args);
 			} else {
 				return methodOrProp;
 			}

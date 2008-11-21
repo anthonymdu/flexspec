@@ -30,6 +30,7 @@ end
 
 class ErbHelper
   def self.write(template_name, target, binding)
+    puts "Writing #{template_name} to #{target}"
     File.open(target, 'w') do |file|
       template = File.join(File.dirname(__FILE__), 'test', template_name)
 
@@ -68,7 +69,7 @@ class TestConfig
   end
 
   def test_suite_dir
-    @test_suite_name || test_dir
+    @test_suite_dir || test_dir
   end
 end
 
