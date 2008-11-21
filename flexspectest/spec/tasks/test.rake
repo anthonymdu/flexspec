@@ -1,5 +1,6 @@
 require 'erb'
 require 'active_support'
+require File.dirname(__FILE__) + '/config'
 
 namespace :test do
   namespace :build do
@@ -14,6 +15,7 @@ namespace :test do
       @task_name = 'test:build:suite'
 
       @test_suite_name = test_config.test_suite_name
+      @test_initializer = test_config.test_initializer
       ErbHelper.write('TestSuite.as.erb', test_config.test_suite_file, binding)
     end
 
@@ -35,42 +37,6 @@ class ErbHelper
       file.puts(test_suite)
     end
   end
-end
-
-class TestConfig
-  include Singleton
-
-  attr_accessor :test_dir, :app_name
-  attr_writer :test_suite_dir
-
-  def initialize
-    @test_dir = File.join('test', 'unit')
-    @app_name = 'App'
-  end
-
-  def test_suite_name
-    "#{app_name}TestSuite"
-  end
-
-  def test_runner_name
-    "#{app_name}TestRunner"
-  end
-
-  def test_runner_file
-    File.join(test_suite_dir, "#{test_runner_name}.mxml")
-  end
-
-  def test_suite_file
-    File.join(test_suite_dir, "#{test_suite_name}.as")
-  end
-
-  def test_suite_dir
-    @test_suite_dir || test_dir
-  end
-end
-
-def test_config
-  TestConfig.instance
 end
 
 class Project
@@ -110,4 +76,33 @@ class Project
   def test_files
     Dir[File.join(@test_directory, '**', '*Test.as')].select { |file| File.file?(file) }
   end
+end
+
+class TestConfig < Rake::Config
+  def test_suite_name
+    "#{app_name}TestSuite"
+  end
+
+  def test_runner_name
+    "#{app_name}TestRunner"
+  end
+
+  def test_runner_file
+    File.join(test_suite_dir, "#{test_runner_name}.mxml")
+  end
+
+  def test_suite_file
+    File.join(test_suite_dir, "#{test_suite_name}.as")
+  end
+end
+
+TestConfig.configure do |config|
+  config.add(:test_initializer, :required => false)
+  config.add(:app_name, :default => 'App')
+  config.add(:test_dir, :default => File.join('test', 'unit'))
+  config.add(:test_suite_dir, :default => Proc.new { |config| config.test_dir })
+end
+
+def test_config
+  TestConfig.instance
 end

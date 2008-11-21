@@ -13,6 +13,8 @@ package {
 	public class <%= @test_suite_name %> extends TestSuite {
 		public function <%= @test_suite_name %>(param:Object=null) {
 			super(param);
+			<% if @test_initializer %>new <%= @test_initializer %>()<% end %>
+			
 			addTests();
 		}
 

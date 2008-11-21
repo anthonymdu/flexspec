@@ -1,4 +1,5 @@
 require 'fileutils'
+require File.dirname(__FILE__) + '/config'
 
 namespace :flexspec do
   task :update => [:update_cache] do

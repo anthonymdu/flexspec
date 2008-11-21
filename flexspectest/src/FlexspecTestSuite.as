@@ -12,6 +12,7 @@ package {
 	public class FlexspecTestSuite extends TestSuite {
 		public function FlexspecTestSuite(param:Object=null) {
 			super(param);
+						
 			addTests();
 		}
 
