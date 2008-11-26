@@ -200,7 +200,7 @@ class Base {
 }
 
 dynamic class BaseStub extends Base {
-	include "../../../../includes/Stubbable.as";
+	include "../../../../spec/includes/Stubbable.as";
 	
 	public override function get propertyToOverride():Number { return this.invokeStub('propertyToOverride'); }
 	public function get propertyX():Object { return this.invokeStub('propertyX'); }

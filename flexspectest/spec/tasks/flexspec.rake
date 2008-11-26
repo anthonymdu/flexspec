@@ -62,7 +62,7 @@ end
 FlexspecConfig.configure do |config|
   # config.add(:install_location, :default => 'spec')
   config.add(:repo_location, :default => 'git://github.com/moneypools/flexspec.git')
-  config.add(:files_of_interest, :default => ['tasks'])
+  config.add(:files_of_interest, :default => ['tasks', 'includes'])
   config.add(:local_cache, :default => File.join('tmp', 'flexspec'))
   config.add(:update_target)
 end
