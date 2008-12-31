@@ -16,25 +16,27 @@ namespace :test do
 
       @test_suite_name = test_config.test_suite_name
       @test_initializer = test_config.test_initializer
-      ErbHelper.write('TestSuite.as.erb', test_config.test_suite_file, binding)
+      Flexspec::ErbHelper.write('TestSuite.as.erb', test_config.test_suite_file, binding)
     end
 
     task :runner do
       @test_suite_name = test_config.test_suite_name
-      ErbHelper.write('TestRunner.mxml.erb', test_config.test_runner_file, binding)
+      Flexspec::ErbHelper.write('TestRunner.mxml.erb', test_config.test_runner_file, binding)
     end
   end
 end
 
-class ErbHelper
-  def self.write(template_name, target, binding)
-    puts "Writing #{template_name} to #{target}"
-    File.open(target, 'w') do |file|
-      template = File.join(File.dirname(__FILE__), 'test', template_name)
+module Flexspec
+  class ErbHelper
+    def self.write(template_name, target, binding)
+      puts "Writing #{template_name} to #{target}"
+      File.open(target, 'w') do |file|
+        template = File.join(File.dirname(__FILE__), 'test', template_name)
 
-      test_suite = ERB.new(File.read(template), nil, "%>").result(binding)
+        test_suite = ERB.new(File.read(template), nil, "%>").result(binding)
 
-      file.puts(test_suite)
+        file.puts(test_suite)
+      end
     end
   end
 end
