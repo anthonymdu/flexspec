@@ -6,7 +6,7 @@ namespace :test do
   namespace :build do
     desc "Rebuilds the test suite file"
     task :suite do
-      project = Project.new(test_config.test_dir)
+      project = Project.new(test_config.test_dir, test_config.test_pattern)
 
       @test_suite_name = test_config.test_suite_name
       @packages = project.packages
@@ -42,8 +42,9 @@ module Flexspec
 end
 
 class Project
-  def initialize(test_directory)#, file_filter)
+  def initialize(test_directory, test_pattern)
     @test_directory = test_directory
+    @test_pattern = test_pattern
   end
 
   def package_test_sets
@@ -76,7 +77,7 @@ class Project
   end
 
   def test_files
-    Dir[File.join(@test_directory, '**', '*Test.as')].select { |file| File.file?(file) }
+    Dir[File.join(@test_directory, @test_pattern)].select { |file| File.file?(file) }
   end
 end
 
@@ -99,6 +100,7 @@ class TestConfig < Rake::Config
 end
 
 TestConfig.configure do |config|
+  config.add(:test_pattern, :default => File.join('**', '*Test.as'))
   config.add(:test_initializer, :required => false)
   config.add(:app_name, :default => 'App')
   config.add(:test_dir, :default => File.join('test', 'unit'))
