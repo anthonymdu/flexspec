@@ -25,7 +25,7 @@ namespace :flexspec do
         system("git clone #{flexspec_config.repo_location} #{flexspec_config.local_cache}")
       else
         puts "Doing initial clone of #{flexspec_config.repo_location} to #{flexspec_config.local_cache}"
-        system("git clone #{flexspec_config.repo_location} #{flexspec_config.local_cache}")
+        system("git clone --depth 1 #{flexspec_config.repo_location} #{flexspec_config.local_cache}")
       end
     end
 
