@@ -72,11 +72,11 @@ class TestingExpectation implements Expectation {
 		return this;
 	}
 	
-	public function andReturn(result:*):Expectation {
+	public function andReturn(...values):Expectation {
 		return this;
 	}
 	
-	public function invoke(args:*):* {
+	public function invoke(args:Array):* {
 		return this;
 	}
 	

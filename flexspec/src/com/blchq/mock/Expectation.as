@@ -1,9 +1,9 @@
 package com.blchq.mock {
 	public interface Expectation {
 		function returns(result:*):Expectation;
-		function andReturn(result:*):Expectation;
+		function andReturn(...values):Expectation;
 		
-		function invoke(args:*):*;
+		function invoke(args:Array):*;
 		function executes(block:Function):Expectation;
 		
 		function withParams(...args):Expectation;

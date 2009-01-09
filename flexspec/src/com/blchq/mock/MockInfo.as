@@ -2,7 +2,7 @@ package com.blchq.mock {
 	public class MockInfo {
 		private var objectBeingMocked:Object;
 		private var stubExpectations:Object = {};
-		
+
 		public function MockInfo(objectBeingMocked:Object) {
 			this.objectBeingMocked = objectBeingMocked;
 		}
@@ -16,7 +16,7 @@ package com.blchq.mock {
 			
 			return expectation;
 		}
-		
+
 		public function invokeStub(name:String, args:Array):* {
 			// TODO: make this return a default expectation?
 			if (stubExpectations == null || stubExpectations[name] == null) return invokeStubLocally(name, args);
@@ -30,7 +30,7 @@ package com.blchq.mock {
 			var methodOrProp:* = objectBeingMocked.superMethodOrProp(name);
 			return invokeMethod(methodOrProp, args);
 		}
-		
+
 		private function invokeMethod(methodOrProp:*, args:Array):* {
 			if (methodOrProp is Function) {
 				return methodOrProp.apply(objectBeingMocked, args);

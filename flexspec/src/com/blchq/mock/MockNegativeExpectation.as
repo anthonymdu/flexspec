@@ -1,15 +1,8 @@
 package com.blchq.mock {
-	public class MockNegativeExpectation extends MockExpectation {
+	public class MockNegativeExpectation extends MessageExpectation {
 		public function MockNegativeExpectation(stubbed:*, method:String) {
-			super(stubbed, method);
-			_executedSuccessfully = true;
-		}
-		
-		public override function invoke(actualArgs:*):* {
-			var result:* = super.invoke(actualArgs);
-			_executedSuccessfully = false;
-			
-			return result;
+			super(stubbed, method, false);
+			_expectedCount = 0;
 		}
 	}
 }
