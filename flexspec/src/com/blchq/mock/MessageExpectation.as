@@ -38,7 +38,7 @@ package com.blchq.mock {
 		}
 
 		public function andReturn(...values):Expectation {
-			_values = values;
+			_values = _values.concat(values);
 			return this;
 		}
 
@@ -78,7 +78,12 @@ package com.blchq.mock {
 			}
 			
 			_executedSuccessfully = true;
-			return _values[_actualCount - 1];
+			
+			if (_values.length == 1) {
+				return _values[0];
+			} else {
+				return _values[_actualCount - 1];
+			}
 		}
 
 		private function raiseMethodNotStubbedError(stubbed:*, method:String):void {
