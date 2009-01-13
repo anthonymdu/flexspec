@@ -25,7 +25,7 @@ namespace :flexspec do
         system("git clone #{flexspec_config.repo_location} #{flexspec_config.local_cache}")
       else
         puts "Doing initial clone of #{flexspec_config.repo_location} to #{flexspec_config.local_cache}"
-        system("git clone #{flexspec_config.repo_location} #{flexspec_config.local_cache}")
+        system("git clone --depth 1 #{flexspec_config.repo_location} #{flexspec_config.local_cache}")
       end
     end
 
@@ -43,6 +43,7 @@ namespace :flexspec do
     flexspec_config.files_of_interest.each do |file|
       cp_r(file, flexspec_config.install_location)
     end
+    cp(flexspec_config.swc_file, flexspec_config.libs_path)
   end
 
   def current_cache_repo_location
@@ -57,12 +58,18 @@ class FlexspecConfig < Rake::Config
   def install_location
     File.join(update_target, 'spec')
   end
+
+  def libs_path
+    File.join(update_target, libs_dir_name)
+  end
 end
 
 FlexspecConfig.configure do |config|
   # config.add(:install_location, :default => 'spec')
+  config.add(:libs_dir_name, :default => 'lib')
   config.add(:repo_location, :default => 'git://github.com/moneypools/flexspec.git')
   config.add(:files_of_interest, :default => ['tasks', 'includes'])
+  config.add(:swc_file, :default => File.join('bin', 'flexspec.swc'))
   config.add(:local_cache, :default => File.join('tmp', 'flexspec'))
   config.add(:update_target)
 end

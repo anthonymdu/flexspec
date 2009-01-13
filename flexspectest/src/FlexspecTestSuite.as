@@ -21,6 +21,7 @@ package {
 			addTestSuite(MessageExpectationTest)
 			addTestSuite(MockTestCaseTest)
 			addTestSuite(MockUtilityTest)
+			addTestSuite(SpecHelperTest)
 			addTestSuite(StubbingTest)
 
 			// com.blchq.unit			

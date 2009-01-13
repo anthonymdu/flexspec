@@ -45,7 +45,17 @@ package com.blchq.test {
 	    	}
 			super.runFinish();
 		}
-		
+
+		protected function stub(stubClass:Class, stubs:Object=null):* {
+			if (!stubs) stubs = {};
+			
+			var stub:* = new stubClass();
+			for (var stubMethod:String in stubs) {
+				stub.stub(stubMethod).andReturn(stubs[stubMethod]);
+			}
+			return stub;
+		}
+
 		protected function describe(description:String, block:Function):void {
 			describeStack.push(description);
 			
