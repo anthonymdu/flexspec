@@ -21,7 +21,7 @@ package com.blchq.test {
 				methodNames.push(name);
 			}
 			
-			return methodNames;
+			return methodNames.sort();
 		}
 		
 		public override function runStart():void {

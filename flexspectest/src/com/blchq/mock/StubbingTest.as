@@ -1,8 +1,31 @@
 package com.blchq.mock {
+	import com.blchq.test.SpecTestCase;
+	
 	import flexunit.framework.AssertionFailedError;
-	import flexunit.framework.TestCase;
 
-	public class StubbingTest extends TestCase {
+	public class StubbingTest extends SpecTestCase {
+		public override function defineTests():void {
+			describe('invoke', function():void {
+				it('should expand out arguments when just passed as "arguments"', function():void {
+					var stub:BaseStub = new BaseStub();
+					assertEquals(1, stub.methodPassingWithArguments(1));
+				});
+
+				it('should expand arguments when none given and just passed as "arguments"', function():void {
+					var stub:BaseStub = new BaseStub();
+					assertEquals("methodPassingWithArgumentsNotTakingAny", stub.methodPassingWithArgumentsNotTakingAny());
+				});
+
+				it('should succeed when correct when just passed as "arguments"', function():void {
+					var stub:BaseStub = new BaseStub();
+					var expectation:Expectation = stub.shouldReceive('methodPassingWithArguments').withParams(1);
+					
+					stub.methodPassingWithArguments(1);
+					assertTrue(expectation.executedSuccessfully);
+				});
+			});
+		}
+
 		public function testShouldGetStubbedPropertyValue():void {
 			var stub:BaseStub = new BaseStub();
 			var propertyVal:Number = 123
@@ -197,23 +220,29 @@ class Base {
 	public function get propertyToOverride():Number { return DEFAULT_VALUE; }
 	public function get propertyToStubDirectly():Number { return DEFAULT_VALUE; }
 	public function get propertyOverriddenButNotStubbedInTest():Number { return DEFAULT_VALUE; }
+
+	public function methodPassingWithArguments(a:int):int { return a; }
+	public function methodPassingWithArgumentsNotTakingAny():String { return 'methodPassingWithArgumentsNotTakingAny'; }
 }
 
 dynamic class BaseStub extends Base {
 	include "../../../../spec/includes/Stubbable.as";
 	
-	public override function get propertyToOverride():Number { return this.invokeStub('propertyToOverride'); }
-	public function get propertyX():Object { return this.invokeStub('propertyX'); }
+	public override function get propertyToOverride():Number { return invokeStub('propertyToOverride'); }
+	public function get propertyX():Object { return invokeStub('propertyX'); }
 	
-	public override function get propertyOverriddenButNotStubbedInTest():Number { return this.invokeStub('propertyOverriddenButNotStubbedInTest'); }
+	public override function get propertyOverriddenButNotStubbedInTest():Number { return invokeStub('propertyOverriddenButNotStubbedInTest'); }
 	
-	public function methodWithParams(param:String):Object { return this.invokeStub('methodWithParams', param); }
-	public function methodWithArrayParams(param:Array):Object { return this.invokeStub('methodWithArrayParams', param); }
-	public function methodWithThreeParams(param1:Object, param2:Object, param3:Object):Object { return this.invokeStub('methodWithThreeParams', param1, param2, param3); }
+	public function methodWithParams(param:String):Object { return invokeStub('methodWithParams', param); }
+	public function methodWithArrayParams(param:Array):Object { return invokeStub('methodWithArrayParams', param); }
+	public function methodWithThreeParams(param1:Object, param2:Object, param3:Object):Object { return invokeStub('methodWithThreeParams', param1, param2, param3); }
 	
-	public function methodWithVariableNumberOfParams(...args):Object { return this.invokeStub('methodWithVariableNumberOfParams', args); }
+	public function methodWithVariableNumberOfParams(...args):Object { return invokeStub('methodWithVariableNumberOfParams', args); }
 	
-	public override function methodOverriddenButNotStubbedInTest():Number { return this.invokeStub('methodOverriddenButNotStubbedInTest'); }
+	public override function methodOverriddenButNotStubbedInTest():Number { return invokeStub('methodOverriddenButNotStubbedInTest'); }
+
+	public override function methodPassingWithArguments(a:int):int { return invokeStub('methodPassingWithArguments', arguments); }
+	public override function methodPassingWithArgumentsNotTakingAny():String { return invokeStub('methodPassingWithArgumentsNotTakingAny', arguments); }
 	
 	// TODO: try this using arguments.caller.something
 }
