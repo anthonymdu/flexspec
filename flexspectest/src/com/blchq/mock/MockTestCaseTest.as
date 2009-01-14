@@ -7,64 +7,41 @@ package com.blchq.mock {
 	public class MockTestCaseTest extends SpecTestCase {
 		public override function defineTests():void {
 			describe('runVerifications', function():void {
-				it("should ignore expectation that failed fast so tearDown doesn't fail twice", function():void {
-					var testCase:MockTestCase = new MockTestCase();
-					testCase.verify(new TestingExpectation(false, true));
-					testCase.runVerifications();
-				});
+				it('should cause expecations to verify their messages were received', function():void {
+					var failed:Boolean = false;
 
-				it('should fail when an expectation failed', function():void {
-					var failed:Boolean = false;
-					
 					var testCase:MockTestCase = new MockTestCase();
-					testCase.verify(new TestingExpectation(true));
-					testCase.verify(new TestingExpectation(false));
-					try {
-						testCase.runVerifications();
-					} catch (e:AssertionFailedError) {
-						failed = true;
-					}
-					if (!failed) fail('Assertion should have failed');
-				});
-				
-				it('should pass when expectation pass', function():void {
-					var failed:Boolean = false;
-					
-					var testCase:MockTestCase = new MockTestCase();
-					testCase.verify(new TestingExpectation(true));
-					testCase.runVerifications();
-				});
+					var expectation:TestingExpectation = new TestingExpectation(true);
 
-				it('should pass when no expectations', function():void {
-					var failed:Boolean = false;
-					
-					var testCase:MockTestCase = new MockTestCase();
+					testCase.verify(expectation);
 					testCase.runVerifications();
+
+					assertTrue(expectation.verifyMessagesReceivedCalled);
 				});
 				
 				it('should not care about expecatations from earlier verifications', function():void {
 					var testCase:MockTestCase = new MockTestCase();
-					testCase.verify(new TestingExpectation(false));
-					try {
-						testCase.runVerifications();
-					} catch (e:AssertionFailedError) { }
-					
-					testCase.verify(new TestingExpectation(true));
+					var expectation:TestingExpectation = new TestingExpectation(true);
+
+					testCase.verify(expectation);
 					testCase.runVerifications();
+
+					expectation.verifyMessagesReceivedCalled = false;
+
+					testCase.runVerifications();
+					assertFalse(expectation.verifyMessagesReceivedCalled);
 				});
 			});
 
 			it('should RunVerificationsInTearDown', function():void {
 				var failed:Boolean = false;
-				
+
 				var testCase:MockTestCase = new MockTestCase();
-				testCase.verify(new TestingExpectation(false));
-				try {
-					testCase.tearDown();
-				} catch (e:AssertionFailedError) {
-					failed = true;
-				}
-				if (!failed) fail('Assertion should have failed');
+				var expectation:TestingExpectation = new TestingExpectation(true);
+				testCase.verify(expectation);
+
+				testCase.tearDown();
+				assertTrue(expectation.verifyMessagesReceivedCalled);
 			});
 
 			describe('stub', function():void {
@@ -88,6 +65,7 @@ import com.blchq.mock.Expectation;
 class TestingExpectation implements Expectation {
 	public var stubbedExecutedSuccessfully:Boolean;
 	public var stubbedFailedFast:Boolean;
+	public var verifyMessagesReceivedCalled:Boolean = false;
 	
 	public function TestingExpectation(stubbedExecutedSuccessfully:Boolean, stubbedFailedFast:Boolean=false) {
 		this.stubbedExecutedSuccessfully = stubbedExecutedSuccessfully;
@@ -124,6 +102,10 @@ class TestingExpectation implements Expectation {
 
 	public function get failureMessage():String {
 		return "";
+	}
+
+	public function verifyMessagesReceived():void {
+		verifyMessagesReceivedCalled = true;
 	}
 }
 

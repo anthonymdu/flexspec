@@ -1,6 +1,4 @@
 package com.blchq.mock {
-	import flash.utils.getQualifiedClassName;
-	
 	import flexunit.framework.AssertionFailedError;
 	
 	import mx.utils.ObjectUtil;
@@ -29,16 +27,13 @@ package com.blchq.mock {
 
 		public function get failureMessage():String { return ObjectUtil.toString(this); }
 
-		public function MessageExpectation(stubbed:*, method:String, requiresInvocation:Boolean, verifyDeclaration:Boolean=true) {
+		public function MessageExpectation(stubbed:*, method:String, requiresInvocation:Boolean) {
 			_stubbed = stubbed;
 			_method = method;
 			
 			_executedSuccessfully = !requiresInvocation;
 			
 			_errorGenerator = new ErrorGenerator(stubbed, null);
-
-			// TODO: find a better place for this check, shouldn't be in this class
-			if (verifyDeclaration && !MockUtility.isDeclaredByObject(stubbed, method)) raiseMethodNotStubbedError(stubbed, method);
 		}
 
 		public function returns(result:*):Expectation {
@@ -87,8 +82,10 @@ package com.blchq.mock {
 			}
 		}
 
-		private function raiseMethodNotStubbedError(stubbed:*, method:String):void {
-			throw new Error('method ' + method + ' not defined on ' + getQualifiedClassName(stubbed) + '. If it is not defined with a call to invokeStub, stubbing will not function properly.');
+		public function verifyMessagesReceived():void {
+			if (!failedFast && !executedSuccessfully) {
+				_errorGenerator.raise_expectation_error(_method, _expectedCount, _actualCount, []);
+			}
 		}
 	}
 }
@@ -114,7 +111,7 @@ class ErrorGenerator {
 	}
 
 	public function raise_unexpected_message_error(sym:String, args:Array):void {
-		__raise(i(intro, " received unexpected message :", sym, "arg_message(args), "))
+		__raise(i(intro, " received unexpected message :", sym, arg_message(args)))
 	}
 
 	public function raise_unexpected_message_args_error(method:String, expectedArgs:Array, actualArgs:Array):void {

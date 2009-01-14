@@ -12,6 +12,8 @@ package com.blchq.mock {
 		function get failedFast():Boolean;
 
 		function get failureMessage():String; 
+
+		function verifyMessagesReceived():void;
 		// TODO: 
 		// function validate():Boolean
 	}

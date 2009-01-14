@@ -20,18 +20,11 @@ package com.blchq.mock {
 		}
 
 		public function runVerifications(message:String=''):void {
-			var failedExpectation:Expectation = null;
 			for each (var expectation:Expectation in _expectations) {
-				if (!expectation.executedSuccessfully && !expectation.failedFast) {
-					failedExpectation = expectation;
-					break;
-				}
+				expectation.verifyMessagesReceived();
 			}
 			
 			_expectations = [];
-			if (failedExpectation != null) {
-				failWithUserMessage(message, "Expectation failed\n" + failedExpectation.failureMessage);
-			}
 		}
 
 		public function stub(stubClass:Class, stubs:Object=null):* {
@@ -42,13 +35,6 @@ package com.blchq.mock {
 				stub.stub(stubMethod).andReturn(stubs[stubMethod]);
 			}
 			return stub;
-		}
-
-		private static function failWithUserMessage( userMessage:String, failMessage:String ):void {
-			if (userMessage.length > 0)
-				userMessage = userMessage + " - ";
-	
-			throw new AssertionFailedError(userMessage + failMessage);
 		}
 	}
 }
