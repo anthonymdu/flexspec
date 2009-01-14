@@ -1,9 +1,9 @@
 package com.blchq.mock {
-	public class MockInfo {
+	public class Proxy {
 		private var objectBeingMocked:Object;
 		private var stubExpectations:Object = {};
 
-		public function MockInfo(objectBeingMocked:Object) {
+		public function Proxy(objectBeingMocked:Object) {
 			this.objectBeingMocked = objectBeingMocked;
 		}
 

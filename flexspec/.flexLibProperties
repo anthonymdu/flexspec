@@ -4,7 +4,7 @@
 <classEntry path="FlexUnitTestRunnerApplication"/>
 <classEntry path="com.blchq.mock.Expectation"/>
 <classEntry path="com.blchq.mock.MockExpectation"/>
-<classEntry path="com.blchq.mock.MockInfo"/>
+<classEntry path="com.blchq.mock.Proxy"/>
 <classEntry path="com.blchq.mock.MockNegativeExpectation"/>
 <classEntry path="com.blchq.mock.MockTestCase"/>
 <classEntry path="com.blchq.mock.MockUtility"/>
