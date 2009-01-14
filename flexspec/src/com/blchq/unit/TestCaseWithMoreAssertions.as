@@ -95,7 +95,7 @@ package com.blchq.unit {
 			var expected:Array = args.shift();
 			var actual:Array = args.shift();
 			
-			var differedIndex:int = -1;
+			
 			
 			if (expected.length != actual.length) {
 				failArrayEquals("in length (" + expected.length + " != " + actual.length + ")", userMessage, expected, actual);
@@ -103,25 +103,32 @@ package com.blchq.unit {
 			
 			var ordered:Boolean = true;
 			if (args.length > 0) ordered = args.shift();
-			
+
 			var expectedCopy:Array = expected.concat();
 			var actualCopy:Array = actual.concat();
+
 			if (!ordered) {
 				expectedCopy.sort();
 				actualCopy.sort();
 			}
-			for (var i:int = 0; i < expectedCopy.length; i++) {
-				if (expectedCopy[i] != actualCopy[i]) {
-					differedIndex = i;
-					break;
-				}
-			}
 			
+			var differedIndex:int = compareArrays(expectedCopy, actualCopy);
+						
 			if (differedIndex >= 0) {
 				failArrayEquals("at " + differedIndex + ", value " + expectedCopy[differedIndex], userMessage, expected, actual);
 			}
 		}
-		
+
+		public static function compareArrays(expected:Array, actual:Array):int {
+			for (var i:int = 0; i < expected.length; i++) {
+				if (expected[i] != actual[i]) {
+					return i;
+				}
+			}
+
+			return -1;
+		}
+
 		private static function failArrayEquals(differenceTypeMessage:String, userMessage:String, expected:Array, actual:Array):void {
 			failWithUserMessage(userMessage, "Arrays differed " + differenceTypeMessage +
 										 	 "\nexpected array: " + ObjectUtil.toString(expected) +

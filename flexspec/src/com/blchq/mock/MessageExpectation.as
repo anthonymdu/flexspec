@@ -1,4 +1,6 @@
 package com.blchq.mock {
+	import com.blchq.unit.TestCaseWithMoreAssertions;
+	
 	import flexunit.framework.AssertionFailedError;
 	
 	import mx.utils.ObjectUtil;
@@ -62,7 +64,7 @@ package com.blchq.mock {
 					_errorGenerator.raise_expectation_error(_method, _expectedCount, _actualCount, actualArgs);
 				}
 				
-				if (_expectedArgs && ObjectUtil.compare(_expectedArgs, actualArgs) != 0) {
+				if (!compareArrays(_expectedArgs, actualArgs)) {
 					_errorGenerator.raise_unexpected_message_args_error(_method, _expectedArgs, actualArgs);
 				}
 				if (_blockToExecute != null) {
@@ -86,6 +88,28 @@ package com.blchq.mock {
 			if (!failedFast && !executedSuccessfully) {
 				_errorGenerator.raise_expectation_error(_method, _expectedCount, _actualCount, []);
 			}
+		}
+
+		private function compareArrays(expectedArgs:Array, actualArgs:Array):Boolean {
+			if (expectedArgs) {
+				if (expectedArgs.length != actualArgs.length) return false;
+
+				// TODO: move this into a custom assert
+				for (var i:uint = 0; i < expectedArgs.length; i++) {
+					var expected:Object = expectedArgs[i];
+					var actual:Object = actualArgs[i];
+					if (expected != actual && !areSimilarArrays(expected, actual)) {
+						return false;
+					}
+				}
+			}
+
+			return true;
+		}
+
+		private function areSimilarArrays(a:Object, b:Object):Boolean {
+			return a is Array && b is Array &&
+					TestCaseWithMoreAssertions.compareArrays(a as Array, b as Array) == -1;
 		}
 	}
 }
@@ -150,7 +174,7 @@ class ErrorGenerator {
 	}
 
 	private function format_args(args:Array):String {
-		if (args.length == 0 || args[0] == 'no_args') return "(no args)"
+		if (!args || args.length == 0 || args[0] == 'no_args') return "(no args)"
 		if (args[0] == 'any_args') return "(any args)"
 		return "(" + arg_list(args) + ")"
 	}
