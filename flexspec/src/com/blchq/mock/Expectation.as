@@ -10,6 +10,8 @@ package com.blchq.mock {
 		
 		function get executedSuccessfully():Boolean;
 		function get failedFast():Boolean;
+
+		function get failureMessage():String; 
 		// TODO: 
 		// function validate():Boolean
 	}

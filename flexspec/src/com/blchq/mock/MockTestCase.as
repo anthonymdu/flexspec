@@ -3,8 +3,6 @@ package com.blchq.mock {
 	
 	import flexunit.framework.AssertionFailedError;
 	
-	import mx.utils.ObjectUtil;
-	
 	public class MockTestCase extends SpecTestCase {
 		private var _expectations:Array = [];
 
@@ -32,7 +30,7 @@ package com.blchq.mock {
 			
 			_expectations = [];
 			if (failedExpectation != null) {
-				failWithUserMessage(message, "Expectation failed\n" + ObjectUtil.toString(failedExpectation));
+				failWithUserMessage(message, "Expectation failed\n" + failedExpectation.failureMessage);
 			}
 		}
 

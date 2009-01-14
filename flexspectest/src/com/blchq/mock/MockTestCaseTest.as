@@ -121,6 +121,10 @@ class TestingExpectation implements Expectation {
 	public function get failedFast():Boolean {
 		return stubbedFailedFast;
 	}
+
+	public function get failureMessage():String {
+		return "";
+	}
 }
 
 
