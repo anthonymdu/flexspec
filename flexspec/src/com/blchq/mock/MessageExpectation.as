@@ -21,8 +21,10 @@ package com.blchq.mock {
 		private var _actualCount:int = 0;
 
 		private var _values:Array = [];
+		private var _failedFast:Boolean = false;
 
 		public function get executedSuccessfully():Boolean { return _executedSuccessfully; }
+		public function get failedFast():Boolean { return _failedFast; }
 
 		public function MessageExpectation(stubbed:*, method:String, requiresInvocation:Boolean, verifyDeclaration:Boolean=true) {
 			_stubbed = stubbed;
@@ -53,36 +55,41 @@ package com.blchq.mock {
 		}
 
 		public function invoke(actualArgs:Array):* {
-			_actualCount++;
-			if (_expectedCount != -1 && _expectedCount > _actualCount) {
-				throw new AssertionFailedError("Expected " + _method + " to be called " + _expectedCount + " times, but was called " + _actualCount + " times");
-			}
-			
-			if (_expectedArgs) {
-				Assert.assertEquals("In " + _method + " expected args != actual args (different lengths).",
-									_expectedArgs.length, actualArgs.length);
-	
-				// TODO: move this into a custom assert
-				for (var i:uint = 0; i < _expectedArgs.length; i++) {
-					var message:String = "In " + _method + " expected args != actual args (differ at " + i + ").";
-					var expected:Object = _expectedArgs[i];
-					if (expected is Array) {
-						TestCaseExt.assertArrayEquals(message, expected, actualArgs[i]);
-					} else {
-						Assert.assertEquals(message, expected, actualArgs[i]);
+			try {
+				_actualCount++;
+				if (_expectedCount != -1 && _expectedCount > _actualCount) {
+					throw new AssertionFailedError("Expected " + _method + " to be called " + _expectedCount + " times, but was called " + _actualCount + " times");
+				}
+				
+				if (_expectedArgs) {
+					Assert.assertEquals("In " + _method + " expected args != actual args (different lengths).",
+										_expectedArgs.length, actualArgs.length);
+		
+					// TODO: move this into a custom assert
+					for (var i:uint = 0; i < _expectedArgs.length; i++) {
+						var message:String = "In " + _method + " expected args != actual args (differ at " + i + ").";
+						var expected:Object = _expectedArgs[i];
+						if (expected is Array) {
+							TestCaseExt.assertArrayEquals(message, expected, actualArgs[i]);
+						} else {
+							Assert.assertEquals(message, expected, actualArgs[i]);
+						}
 					}
 				}
-			}
-			if (_blockToExecute != null) {
-				_blockToExecute(actualArgs);
-			}
-			
-			_executedSuccessfully = true;
-			
-			if (_values.length == 1) {
-				return _values[0];
-			} else {
-				return _values[_actualCount - 1];
+				if (_blockToExecute != null) {
+					_blockToExecute(actualArgs);
+				}
+				
+				_executedSuccessfully = true;
+				
+				if (_values.length == 1) {
+					return _values[0];
+				} else {
+					return _values[_actualCount - 1];
+				}
+			} catch (error:AssertionFailedError) {
+				_failedFast = true;
+				throw error;
 			}
 		}
 

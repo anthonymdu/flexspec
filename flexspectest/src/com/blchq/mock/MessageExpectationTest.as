@@ -4,6 +4,25 @@ package com.blchq.mock {
 
 	public class MessageExpectationTest extends SpecTestCase {
 		public override function defineTests():void {
+			describe('invoke', function():void {
+				it('should set failFast to true when it failed', function():void {
+					var expectation:MessageExpectation = new MessageExpectation({}, 'method', true, false);
+					expectation.withParams([1]);
+					try {
+						expectation.invoke([]);
+					} catch(e:Error) { }
+
+					assertTrue(expectation.failedFast);
+				});
+
+				it('should have failFast as false when it succeeded', function():void {
+					var expectation:MessageExpectation = new MessageExpectation({}, 'method', true, false);
+					expectation.invoke([]);
+
+					assertFalse(expectation.failedFast);
+				});
+			});
+
 			describe('addReturn', function():void {
 				it('should return given values on multiple invocations', function():void {
 					var expectation:MessageExpectation = new MessageExpectation({}, 'method', true, false);

@@ -9,6 +9,7 @@ package com.blchq.mock {
 		function withParams(...args):Expectation;
 		
 		function get executedSuccessfully():Boolean;
+		function get failedFast():Boolean;
 		// TODO: 
 		// function validate():Boolean
 	}
