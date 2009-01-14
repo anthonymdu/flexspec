@@ -24,7 +24,7 @@ package {
 			addTestSuite(StubbingTest)
 
 			// com.blchq.unit			
-			addTestSuite(TestCaseExtTest)
+			addTestSuite(TestCaseWithMoreAssertionsTest)
 
 		}
 	}

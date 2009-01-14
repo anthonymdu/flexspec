@@ -1,7 +1,7 @@
 package com.blchq.test {
-	import flexunit.framework.TestCase;
+	import com.blchq.unit.TestCaseWithMoreAssertions;
 	
-	public class SpecTestCase extends TestCase {
+	public class SpecTestCase extends TestCaseWithMoreAssertions {
 		private var dynamicTests:Object = {};
 		private var describeStack:Array = [];
 		private var _setupContexts:Array = [];

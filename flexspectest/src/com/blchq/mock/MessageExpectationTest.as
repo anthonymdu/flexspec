@@ -36,6 +36,15 @@ package com.blchq.mock {
 			});
 
 			describe('invoke', function():void {
+				it('should fail when given a different function than expected', function():void {
+					var expectation:MessageExpectation = new MessageExpectation({}, 'method', true);
+					expectation.withParams(function():void {});
+
+					assertRaise(AssertionFailedError, function():void {
+						expectation.invoke([function():void {}]);
+					})
+				});
+
 				it('should set failFast to true when it failed', function():void {
 					var expectation:MessageExpectation = new MessageExpectation({}, 'method', true);
 					expectation.withParams([1]);

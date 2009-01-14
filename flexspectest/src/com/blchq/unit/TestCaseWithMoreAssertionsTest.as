@@ -1,28 +1,28 @@
 package com.blchq.unit {
 	import com.adobe.cairngorm.control.CairngormEventDispatcher;
-	import com.blchq.mock.MockTestCase;
+	import com.blchq.test.SpecTestCase;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	
 	import flexunit.framework.AssertionFailedError;
 
-	public class TestCaseExtTest extends MockTestCase {
+	public class TestCaseWithMoreAssertionsTest extends SpecTestCase {
 		public override function defineTests():void {
 			describe('assertObjectEquals', function():void {
 				it("should PassWhenObjectsEmpty", function():void {
-					TestCaseExt.assertObjectEquals({}, {});
+					TestCaseWithMoreAssertions.assertObjectEquals({}, {});
 				});
 		
 				it("should PassWhenObjectsHaveSameContents", function():void {
-					TestCaseExt.assertObjectEquals({hi: 'there', joe: 91}, {hi: 'there', joe: 91});
+					TestCaseWithMoreAssertions.assertObjectEquals({hi: 'there', joe: 91}, {hi: 'there', joe: 91});
 				});
 				
 				it("should FailWhenActualNull", function():void {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertObjectEquals({hi: 'there'}, null);
+						TestCaseWithMoreAssertions.assertObjectEquals({hi: 'there'}, null);
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -33,7 +33,7 @@ package com.blchq.unit {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertObjectEquals({hi: 'there'}, {hi: 'dawg'});
+						TestCaseWithMoreAssertions.assertObjectEquals({hi: 'there'}, {hi: 'dawg'});
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -44,7 +44,7 @@ package com.blchq.unit {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertObjectEquals({hi: 'there', joe: 9}, {hi: 'there'});
+						TestCaseWithMoreAssertions.assertObjectEquals({hi: 'there', joe: 9}, {hi: 'there'});
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -55,7 +55,7 @@ package com.blchq.unit {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertObjectEquals({hi: 'there'}, {hi: 'there', joe: 9});
+						TestCaseWithMoreAssertions.assertObjectEquals({hi: 'there'}, {hi: 'there', joe: 9});
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -66,7 +66,7 @@ package com.blchq.unit {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertObjectEquals({hi: 'there', bye: {
+						TestCaseWithMoreAssertions.assertObjectEquals({hi: 'there', bye: {
 																		under: 'the bridge'}}, 
 												  {hi: 'there', bye: {
 																		under: 'the sky'}});
@@ -79,7 +79,7 @@ package com.blchq.unit {
 				it("should IncludeUserMessageInErrorMessageForNonEqualObjects", function():void {
 					var failed:Boolean = false;
 					try {
-						TestCaseExt.assertObjectEquals('myUserMessage', {hi: 'there'}, {hi: 'dawg'});
+						TestCaseWithMoreAssertions.assertObjectEquals('myUserMessage', {hi: 'there'}, {hi: 'dawg'});
 					} catch (e:AssertionFailedError) {
 						failed = true;
 						assertTrue(e.message + " expected to contain 'myUserMessage'", e.message.match('myUserMessage'));
@@ -90,14 +90,14 @@ package com.blchq.unit {
 			
 			describe('assertNotEquals', function():void {
 				it("should PassWhenNotEqual", function():void {
-					TestCaseExt.assertNotEquals(1, 2);
+					TestCaseWithMoreAssertions.assertNotEquals(1, 2);
 				});
 		
 				it("should FailWhenEqual", function():void {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertNotEquals(1, 1);
+						TestCaseWithMoreAssertions.assertNotEquals(1, 1);
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -109,26 +109,26 @@ package com.blchq.unit {
 				it("should PassWhenStringMatchesPattern", function():void {
 					var failed:Boolean = false;
 					
-					TestCaseExt.assertMatch(/12/, '12');
+					TestCaseWithMoreAssertions.assertMatch(/12/, '12');
 				});
 		
 				it("should PassWhenStringMatchesPatternAndMessageGiven", function():void {
 					var failed:Boolean = false;
 					
-					TestCaseExt.assertMatch('My Message', /12/, '12');
+					TestCaseWithMoreAssertions.assertMatch('My Message', /12/, '12');
 				});
 		
 				it("should PassWhenStringMatchesPatternAsStringAndMessageGiven", function():void {
 					var failed:Boolean = false;
 					
-					TestCaseExt.assertMatch('12', '12');
+					TestCaseWithMoreAssertions.assertMatch('12', '12');
 				});
 		
 				it("should FailWhenActualStringNull", function():void {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertMatch(/Hey/, null);
+						TestCaseWithMoreAssertions.assertMatch(/Hey/, null);
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -139,7 +139,7 @@ package com.blchq.unit {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertMatch(/Hey/, 'Ho');
+						TestCaseWithMoreAssertions.assertMatch(/Hey/, 'Ho');
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -150,7 +150,7 @@ package com.blchq.unit {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertMatch('Hey', 'Ho');
+						TestCaseWithMoreAssertions.assertMatch('Hey', 'Ho');
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -161,7 +161,7 @@ package com.blchq.unit {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertMatch('Ho', /Hey/, 'Ho');
+						TestCaseWithMoreAssertions.assertMatch('Ho', /Hey/, 'Ho');
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -171,7 +171,7 @@ package com.blchq.unit {
 				it("should IncludeUserMessageInErrorMessageForMatch", function():void {
 					var failed:Boolean = false;
 					try {
-						TestCaseExt.assertMatch('myUserMessage', /Hey/, 'Ho');
+						TestCaseWithMoreAssertions.assertMatch('myUserMessage', /Hey/, 'Ho');
 					} catch (e:AssertionFailedError) {
 						failed = true;
 						assertTrue(e.message + " expected to contain 'myUserMessage'", e.message.match('myUserMessage'));
@@ -185,7 +185,7 @@ package com.blchq.unit {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertInDelta(.2, .71, .5);
+						TestCaseWithMoreAssertions.assertInDelta(.2, .71, .5);
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -196,7 +196,7 @@ package com.blchq.unit {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertInDelta(.2, -.31, .5);
+						TestCaseWithMoreAssertions.assertInDelta(.2, -.31, .5);
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -207,7 +207,7 @@ package com.blchq.unit {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertInDelta('failure message', 2, .71, .5);
+						TestCaseWithMoreAssertions.assertInDelta('failure message', 2, .71, .5);
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -215,17 +215,17 @@ package com.blchq.unit {
 				});
 				
 				it("should PassWithValueAtNegativeDelta", function():void {
-					TestCaseExt.assertInDelta('failure message', .8, 0, .8);
+					TestCaseWithMoreAssertions.assertInDelta('failure message', .8, 0, .8);
 				});
 				
 				it("should PassWithValueAtDelta", function():void {
-					TestCaseExt.assertInDelta('failure message', .9, 1.4, .5);
+					TestCaseWithMoreAssertions.assertInDelta('failure message', .9, 1.4, .5);
 				});
 				
 				it("should PassFromValuesAtDeltaWithMessage", function():void {
 					var failed:Boolean = false;
 					try {
-						TestCaseExt.assertInDelta('failure message', .1, .4, .3);
+						TestCaseWithMoreAssertions.assertInDelta('failure message', .1, .4, .3);
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -236,8 +236,8 @@ package com.blchq.unit {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertInDelta('failure message', .1, .4, .3);
-						TestCaseExt.assertRaise(BaseError, function():void { });
+						TestCaseWithMoreAssertions.assertInDelta('failure message', .1, .4, .3);
+						TestCaseWithMoreAssertions.assertRaise(BaseError, function():void { });
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -249,7 +249,7 @@ package com.blchq.unit {
 				it("should FailFromWrongErrorThrown", function():void {
 					var failed:Boolean = false;
 					try {
-						TestCaseExt.assertRaise(BaseError, function():void { throw new AssertionFailedError(); });
+						TestCaseWithMoreAssertions.assertRaise(BaseError, function():void { throw new AssertionFailedError(); });
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -259,7 +259,7 @@ package com.blchq.unit {
 				it("should FailFromSuperThrownWhenSubExpected", function():void {
 					var failed:Boolean = false;
 					try {
-						TestCaseExt.assertRaise(SubError, function():void { throw new BaseError(); });
+						TestCaseWithMoreAssertions.assertRaise(SubError, function():void { throw new BaseError(); });
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -269,7 +269,7 @@ package com.blchq.unit {
 				it("should IncludeExpectedClassInErrorMessage", function():void {
 					var failed:Boolean = false;
 					try {
-						TestCaseExt.assertRaise(SubError, function():void { throw new BaseError(); });
+						TestCaseWithMoreAssertions.assertRaise(SubError, function():void { throw new BaseError(); });
 					} catch (e:AssertionFailedError) {
 						failed = true;
 						assertTrue(e.message + " expected to contain SubError", e.message.match('SubError'));
@@ -280,7 +280,7 @@ package com.blchq.unit {
 				it("should IncludeUserMessageInErrorMessageForRaise", function():void {
 					var failed:Boolean = false;
 					try {
-						TestCaseExt.assertRaise('myUserMessage', SubError, function():void { throw new BaseError(); });
+						TestCaseWithMoreAssertions.assertRaise('myUserMessage', SubError, function():void { throw new BaseError(); });
 					} catch (e:AssertionFailedError) {
 						failed = true;
 						assertTrue(e.message + " expected to contain 'myUserMessage'", e.message.match('myUserMessage'));
@@ -291,7 +291,7 @@ package com.blchq.unit {
 				it("should IncludeActualClassInErrorMessage", function():void {
 					var failed:Boolean = false;
 					try {
-						TestCaseExt.assertRaise(SubError, function():void { throw new BaseError(); });
+						TestCaseWithMoreAssertions.assertRaise(SubError, function():void { throw new BaseError(); });
 					} catch (e:AssertionFailedError) {
 						failed = true;
 						assertTrue(e.message + " expected to contain BaseError", e.message.match('BaseError'));
@@ -301,28 +301,28 @@ package com.blchq.unit {
 				
 				it("should PassFromSpecifiedErrorThrown", function():void {
 					var failed:Boolean = false;
-					TestCaseExt.assertRaise(BaseError, function():void { throw new BaseError(); });
+					TestCaseWithMoreAssertions.assertRaise(BaseError, function():void { throw new BaseError(); });
 				});
 				
 				it("should PassFromSubclassOfSpecifiedErrorThrown", function():void {
-					TestCaseExt.assertRaise(SubError, function():void { throw new SubError(); });
+					TestCaseWithMoreAssertions.assertRaise(SubError, function():void { throw new SubError(); });
 		 		});
 			});
 			
 			describe('assertArrayEquals', function():void {
 		 		it("should BeEqualsForEmptyArrays", function():void {
-		 			TestCaseExt.assertArrayEquals([], []);
+		 			TestCaseWithMoreAssertions.assertArrayEquals([], []);
 		 		});
 		 		
 		 		it("should BeEqualsForSameArrays", function():void {
 		 			var object:Object = new Object();
-		 			TestCaseExt.assertArrayEquals([1, 'a', object], [1, 'a', object]);
+		 			TestCaseWithMoreAssertions.assertArrayEquals([1, 'a', object], [1, 'a', object]);
 		 		});
 		 		
 		 		it("should NotBeEqualsForSimilarOutOfOrderArrays", function():void {
 					var failed:Boolean = false;
 					try {
-						TestCaseExt.assertArrayEquals([1, 'a'], ['a', 1]);
+						TestCaseWithMoreAssertions.assertArrayEquals([1, 'a'], ['a', 1]);
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -331,13 +331,13 @@ package com.blchq.unit {
 		 		
 		 		it("should BeEqualsForSimilarOutOfOrderArraysWhenNotOrdered", function():void {
 		 			var object:Object = new Object();
-		 			TestCaseExt.assertArrayEquals([1, 'a', object], ['a', object, 1], false);
+		 			TestCaseWithMoreAssertions.assertArrayEquals([1, 'a', object], ['a', object, 1], false);
 		 		});
 				
 				it("should NotBeEqualsForFirstArrayLonger", function():void {
 					var failed:Boolean = false;
 					try {
-						TestCaseExt.assertArrayEquals([1], []);
+						TestCaseWithMoreAssertions.assertArrayEquals([1], []);
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -347,7 +347,7 @@ package com.blchq.unit {
 				it("should NotBeEqualsForSecondArrayLonger", function():void {
 					var failed:Boolean = false;
 					try {
-						TestCaseExt.assertArrayEquals([], [1]);
+						TestCaseWithMoreAssertions.assertArrayEquals([], [1]);
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -357,7 +357,7 @@ package com.blchq.unit {
 				it("should IncludeUserMessageInErrorMessageForArray", function():void {
 					var failed:Boolean = false;
 					try {
-						TestCaseExt.assertArrayEquals('myUserMessage', [], [1]);
+						TestCaseWithMoreAssertions.assertArrayEquals('myUserMessage', [], [1]);
 					} catch (e:AssertionFailedError) {
 						failed = true;
 						assertTrue(e.message.match('myUserMessage'));
@@ -368,13 +368,13 @@ package com.blchq.unit {
 			
 			describe('assertCallbackFired', function():void {
 				it('should pass when callback called', function():void {
-					TestCaseExt.assertCallbackFired(function(callback:Function):void {
+					TestCaseWithMoreAssertions.assertCallbackFired(function(callback:Function):void {
 						callback();
 					});
 				});
 
 				it('should give a callback that can take arguments', function():void {
-					TestCaseExt.assertCallbackFired(function(callback:Function):void {
+					TestCaseWithMoreAssertions.assertCallbackFired(function(callback:Function):void {
 						callback(1, "", 3, {});
 					});
 				});
@@ -383,7 +383,7 @@ package com.blchq.unit {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertCallbackFired(function(callback:Function):void { });
+						TestCaseWithMoreAssertions.assertCallbackFired(function(callback:Function):void { });
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -399,7 +399,7 @@ package com.blchq.unit {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertEventFired(target, "someEvent", callback);
+						TestCaseWithMoreAssertions.assertEventFired(target, "someEvent", callback);
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -413,7 +413,7 @@ package com.blchq.unit {
 						target.dispatchEvent(new Event("someEvent"));
 					};
 					
-					TestCaseExt.assertEventFired(target, "someEvent", callback);
+					TestCaseWithMoreAssertions.assertEventFired(target, "someEvent", callback);
 				});
 				
 				it("should FailWithIncorrectEventFired", function():void {
@@ -426,7 +426,7 @@ package com.blchq.unit {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertEventFired(target, "someEvent", callback);
+						TestCaseWithMoreAssertions.assertEventFired(target, "someEvent", callback);
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -439,7 +439,7 @@ package com.blchq.unit {
 					
 					var failed:Boolean = false;
 					try {
-						TestCaseExt.assertEventFired("myUserMessage", target, "someEvent", callback);
+						TestCaseWithMoreAssertions.assertEventFired("myUserMessage", target, "someEvent", callback);
 					} catch (e:AssertionFailedError) {
 						failed = true;
 						assertTrue(e.message.match('myUserMessage'));
@@ -457,7 +457,7 @@ package com.blchq.unit {
 					};
 					
 					var expectedConditions:Object = {objectProp: {stringProp: 'b'}};
-					TestCaseExt.assertEventFired(target, EventWithProperty.NAME, callback, expectedConditions);
+					TestCaseWithMoreAssertions.assertEventFired(target, EventWithProperty.NAME, callback, expectedConditions);
 				});
 				
 				it("should FailWithEventMissingConditions", function():void {
@@ -470,7 +470,7 @@ package com.blchq.unit {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertEventFired(target, EventWithProperty.NAME, callback, {propNotOnEvent: 'Missing Prop'});
+						TestCaseWithMoreAssertions.assertEventFired(target, EventWithProperty.NAME, callback, {propNotOnEvent: 'Missing Prop'});
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -489,7 +489,7 @@ package com.blchq.unit {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertEventFired(target, EventWithProperty.NAME, callback, { a: 'a' });
+						TestCaseWithMoreAssertions.assertEventFired(target, EventWithProperty.NAME, callback, { a: 'a' });
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -505,7 +505,7 @@ package com.blchq.unit {
 						target.dispatchEvent(new CairngormEvent1());
 					};
 					
-					TestCaseExt.assertCairngormEventFired(CairngormEvent1, callback);
+					TestCaseWithMoreAssertions.assertCairngormEventFired(CairngormEvent1, callback);
 				});
 				
 				it("should FailWithIncorrectCairngormEventFired", function():void {
@@ -518,7 +518,7 @@ package com.blchq.unit {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertCairngormEventFired(CairngormEvent2, callback);
+						TestCaseWithMoreAssertions.assertCairngormEventFired(CairngormEvent2, callback);
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -537,7 +537,7 @@ package com.blchq.unit {
 					
 					var expectedConditions:Object = { stringProp: 'EventProperty',
 													  arrayProp: ['EventProp2Val1', 'EventProp2Val2']};
-					TestCaseExt.assertCairngormEventFired(CairngormEventWithProperties, callback, expectedConditions);
+					TestCaseWithMoreAssertions.assertCairngormEventFired(CairngormEventWithProperties, callback, expectedConditions);
 				});
 				
 				it("should FailWithCairngormEventMissingConditions", function():void {
@@ -550,7 +550,7 @@ package com.blchq.unit {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertCairngormEventFired(CairngormEvent2, callback, {prop3: 'Missing Prop'});
+						TestCaseWithMoreAssertions.assertCairngormEventFired(CairngormEvent2, callback, {prop3: 'Missing Prop'});
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -569,7 +569,7 @@ package com.blchq.unit {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertCairngormEventFired(CairngormEvent2, callback, { stringProp: 'OtherstringPropVal' });
+						TestCaseWithMoreAssertions.assertCairngormEventFired(CairngormEvent2, callback, { stringProp: 'OtherstringPropVal' });
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -584,7 +584,7 @@ package com.blchq.unit {
 					var callback:Function = function():void {};
 					var failed:Boolean = false;
 					
-					TestCaseExt.assertEventNotFired(target, "someEvent", callback);
+					TestCaseWithMoreAssertions.assertEventNotFired(target, "someEvent", callback);
 				});
 				
 				it("should PassWithDifferentEventFired", function():void {
@@ -594,7 +594,7 @@ package com.blchq.unit {
 						target.dispatchEvent(new Event("someEvent"));
 					};
 					
-					TestCaseExt.assertEventNotFired(target, "someOtherEvent", callback);
+					TestCaseWithMoreAssertions.assertEventNotFired(target, "someOtherEvent", callback);
 				});
 				
 				it("should FailWithSameEventFired", function():void {
@@ -607,7 +607,7 @@ package com.blchq.unit {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertEventNotFired(target, "someEvent", callback);
+						TestCaseWithMoreAssertions.assertEventNotFired(target, "someEvent", callback);
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -628,7 +628,7 @@ package com.blchq.unit {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertEventNotFired(target, "someEvent", callback);
+						TestCaseWithMoreAssertions.assertEventNotFired(target, "someEvent", callback);
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -643,7 +643,7 @@ package com.blchq.unit {
 					
 					var failed:Boolean = false;
 					try {
-						TestCaseExt.assertEventNotFired("myUserMessage", target, "someEvent", callback);
+						TestCaseWithMoreAssertions.assertEventNotFired("myUserMessage", target, "someEvent", callback);
 					} catch (e:AssertionFailedError) {
 						failed = true;
 						assertTrue(e.message.match('myUserMessage'));
@@ -663,7 +663,7 @@ package com.blchq.unit {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertCairngormEventNotFired(CairngormEvent1, callback);
+						TestCaseWithMoreAssertions.assertCairngormEventNotFired(CairngormEvent1, callback);
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -677,7 +677,7 @@ package com.blchq.unit {
 						target.dispatchEvent(new CairngormEvent2());
 					};
 					
-					TestCaseExt.assertCairngormEventNotFired(CairngormEvent1, callback);
+					TestCaseWithMoreAssertions.assertCairngormEventNotFired(CairngormEvent1, callback);
 				});
 				
 				it("should PassWithNoCairngormEventFired", function():void {
@@ -685,20 +685,20 @@ package com.blchq.unit {
 					
 					var callback:Function = function():void {};
 					
-					TestCaseExt.assertCairngormEventNotFired(CairngormEvent1, callback);
+					TestCaseWithMoreAssertions.assertCairngormEventNotFired(CairngormEvent1, callback);
 				});
 			});
 			
 			describe('assertDateEquals', function():void {
 				it("should AssertDatesEqual", function():void {
-					TestCaseExt.assertDateEquals(new Date(2008, 0, 1), new Date(2008, 0, 1));
+					TestCaseWithMoreAssertions.assertDateEquals(new Date(2008, 0, 1), new Date(2008, 0, 1));
 				});
 				
 				it("should AssertDatesNotEqual", function():void {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertDateEquals(new Date(2008, 0, 1, 12, 5, 1), new Date(2008, 0, 1, 12, 5, 2));
+						TestCaseWithMoreAssertions.assertDateEquals(new Date(2008, 0, 1, 12, 5, 1), new Date(2008, 0, 1, 12, 5, 2));
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -708,14 +708,14 @@ package com.blchq.unit {
 			
 			describe('assertBindable', function():void {
 				it("should PassWhenVarBindingIsTriggeredByDefaultPropertyChangeEvent", function():void {
-					TestCaseExt.assertBindable(new ClassWithBindings(), 'bindableVar');
+					TestCaseWithMoreAssertions.assertBindable(new ClassWithBindings(), 'bindableVar');
 				});
 				
 				it("should FailWhenVarBindingIsNotTriggered", function():void {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertBindable(new ClassWithBindings(), 'bindableVar', 'eventThatDoesNotTriggerBinding');
+						TestCaseWithMoreAssertions.assertBindable(new ClassWithBindings(), 'bindableVar', 'eventThatDoesNotTriggerBinding');
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -723,14 +723,14 @@ package com.blchq.unit {
 				});
 				
 				it("should PassWhenGetterBindingIsTriggeredByCustomEvent", function():void {
-					TestCaseExt.assertBindable(new ClassWithBindings(), 'bindableGetter', 'eventThatTriggersBinding');
+					TestCaseWithMoreAssertions.assertBindable(new ClassWithBindings(), 'bindableGetter', 'eventThatTriggersBinding');
 				});
 				
 				it("should FailWhenGetterBindingIsNotTriggered", function():void {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertBindable(new ClassWithBindings(), 'bindableGetter', 'eventThatDoesNotTriggerBinding');
+						TestCaseWithMoreAssertions.assertBindable(new ClassWithBindings(), 'bindableGetter', 'eventThatDoesNotTriggerBinding');
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -741,7 +741,7 @@ package com.blchq.unit {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertBindable(new ClassWithBindings(), 'bindableGetter');
+						TestCaseWithMoreAssertions.assertBindable(new ClassWithBindings(), 'bindableGetter');
 					} catch (e:AssertionFailedError) {
 						failed = true;
 					}
@@ -752,7 +752,7 @@ package com.blchq.unit {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertBindable("myUserMessage", new ClassWithBindings(), 'bindableGetter');
+						TestCaseWithMoreAssertions.assertBindable("myUserMessage", new ClassWithBindings(), 'bindableGetter');
 					} catch (e:AssertionFailedError) {
 						failed = true;
 						assertTrue(e.message.match('myUserMessage'));
@@ -764,7 +764,7 @@ package com.blchq.unit {
 					var failed:Boolean = false;
 					
 					try {
-						TestCaseExt.assertBindable("myUserMessage", new ClassWithBindings(), 'bindableGetter', 'eventThatDoesNotTriggerBinding');
+						TestCaseWithMoreAssertions.assertBindable("myUserMessage", new ClassWithBindings(), 'bindableGetter', 'eventThatDoesNotTriggerBinding');
 					} catch (e:AssertionFailedError) {
 						failed = true;
 						assertTrue(e.message.match('myUserMessage'));
