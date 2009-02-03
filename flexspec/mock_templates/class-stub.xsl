@@ -12,9 +12,9 @@ exclude-result-prefixes="str">
 </xsl:text>
 	<!-- <xsl:call-template name="properties"/> -->
 
-	<xsl:call-template name="constructor">
+	<xsl:apply-templates select=".">
 		<xsl:with-param name="isConstructor" select="true"/>
-	</xsl:call-template>
+	</xsl:apply-templates>
 	<xsl:call-template name="methods"/>
 <xsl:text>
 	}
@@ -65,13 +65,13 @@ exclude-result-prefixes="str">
 			<xsl:if test="not(@only='read-write')">
 				<xsl:text>-only</xsl:text>
 			</xsl:if> -->
-			<xsl:call-template name="method">
+			<xsl:apply-templates select=".">
 				<xsl:with-param name="isConstructor" select="false"/>
 				<xsl:with-param name="accessLevel" select="public"/>
-			</xsl:call-template>	
+			</xsl:apply-templates>	
 
 			<xsl:if test="position() != last()">
-			<xsl:text>
+				<xsl:text>
 </xsl:text>
 			</xsl:if>
 		</xsl:for-each>
@@ -81,18 +81,20 @@ exclude-result-prefixes="str">
 		<xsl:param name="accessLevel"/>
 		<xsl:param name="isConstructor"/>
 
-			<xsl:text>		</xsl:text>
-			<xsl:value-of select="$accessLevel"/>
-			<xsl:text> override function </xsl:text>
-			<xsl:value-of select="@name"/>
-			<xsl:text>(</xsl:text>
-			<xsl:call-template name="params">
-				<xsl:with-param name="includeTypes">true</xsl:with-param>
-			</xsl:call-template>
-			<xsl:text>			)</xsl:text>
-			<xsl:if test="isConstructor = 'false'"><xsl:text>:</xsl:text></xsl:if>
+		<xsl:text>		|</xsl:text>
+		<xsl:value-of select="$accessLevel"/>
+		<xsl:text>| override function </xsl:text>
+		<xsl:value-of select="@name"/>
+		<xsl:text>(</xsl:text>
+		<xsl:call-template name="params">
+			<xsl:with-param name="includeTypes">true</xsl:with-param>
+		</xsl:call-template>
+		<xsl:text>			)</xsl:text>
+		<xsl:if test="$isConstructor = 'false'">
+			<xsl:text>:</xsl:text>
 			<xsl:value-of select="result/@type"/>
-			<xsl:text> {
+		</xsl:if>
+		<xsl:text> {
 </xsl:text>
 		<xsl:text>			</xsl:text>
 		<xsl:if test="result[@type != 'void']">
