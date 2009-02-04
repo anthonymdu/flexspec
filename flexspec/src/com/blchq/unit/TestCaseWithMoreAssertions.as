@@ -121,7 +121,9 @@ package com.blchq.unit {
 
                 public static function compareArrays(expected:Array, actual:Array):int {
                         for (var i:int = 0; i < expected.length; i++) {
-                                if ( ObjectUtil.compare(expected[i], actual[i]) != 0 ) return i
+                                if (expected[i] == actual[i]) continue;
+                                if (ObjectUtil.compare(expected[i], actual[i]) == 0) continue;
+                                return i;
                         }
 
                         return -1;
