@@ -1,0 +1,12 @@
+namespace :flexspec do
+  desc "Usually ran during an update, this updates the code from a checkout into a flexspec install"
+  task :update_install do
+    puts "Updating install at #{flexspec_config.install_location}"
+    # rm_rf(flexspec_config.install_location)
+    
+    flexspec_config.files_of_interest.each do |file|
+      cp_r(file, flexspec_config.install_location)
+    end
+    cp(flexspec_config.swc_file, flexspec_config.libs_path)
+  end
+end
