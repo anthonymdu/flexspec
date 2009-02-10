@@ -1,16 +1,24 @@
 package com.blchq.unit {
 	import com.adobe.cairngorm.control.CairngormEventDispatcher;
 	import com.blchq.test.SpecTestCase;
-
+	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
-
+	
 	import flexunit.framework.AssertionFailedError;
-
-	import mx.controls.Label;
 
 	public class TestCaseWithMoreAssertionsTest extends SpecTestCase {
 		public override function defineTests():void {
+			describe('assertNaN', function():void {
+				it('should pass when actual NaN', function():void {
+					TestCaseWithMoreAssertions.assertNaN(NaN);
+				});
+
+				assertFails(function():void {
+					TestCaseWithMoreAssertions.assertNaN(1.2);
+				});
+			});
+
 			describe('assertObjectEquals', function():void {
 				it("should PassWhenObjectsEmpty", function():void {
 					TestCaseWithMoreAssertions.assertObjectEquals({}, {});

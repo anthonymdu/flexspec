@@ -1,13 +1,13 @@
 package com.blchq.unit {
 		import com.adobe.cairngorm.control.CairngormEventDispatcher;
-
+		
 		import flash.errors.IllegalOperationError;
 		import flash.events.Event;
 		import flash.utils.getQualifiedClassName;
-
+		
 		import flexunit.framework.AssertionFailedError;
 		import flexunit.framework.TestCase;
-
+		
 		import mx.binding.utils.ChangeWatcher;
 		import mx.events.PropertyChangeEvent;
 		import mx.events.PropertyChangeEventKind;
@@ -16,6 +16,22 @@ package com.blchq.unit {
 		public class TestCaseWithMoreAssertions extends TestCase {
 				public function TestCaseWithMoreAssertions(methodName:String=null) {
 						super(methodName);
+				}
+
+				/**
+				 * Takes the following arguments and verifies the actual value matches the pattern:
+				 *    1 - Optional message to display if the event is fired
+				 *    2 - Actual value
+				 */
+				public static function assertNaN(...args):void {
+					var userMessage:String = '';
+					if (args.length == 2) userMessage = args.shift();
+					
+					var actual:Number = args.shift();
+					
+					if (!isNaN(actual)) {
+						failWithUserMessage(userMessage, "Expected " + actual + " to be NaN ");
+					}
 				}
 
 				public static function assertCallbackFired(...args):void {
