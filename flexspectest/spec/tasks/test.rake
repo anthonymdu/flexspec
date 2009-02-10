@@ -17,6 +17,7 @@ namespace :test do
       @test_suite_name = test_config.test_suite_name
       @test_initializer = test_config.test_initializer
       Flexspec::ErbHelper.write('TestSuite.as.erb', test_config.test_suite_file, binding)
+      puts "Wrote #{@package_test_sets.values.flatten.size} tests in #{@package_test_sets.size} packages"
     end
 
     task :runner do
