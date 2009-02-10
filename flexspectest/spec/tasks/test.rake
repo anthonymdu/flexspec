@@ -6,7 +6,7 @@ namespace :test do
   namespace :build do
     desc "Rebuilds the test suite file"
     task :suite do
-      project = Project.new(test_config.test_dir, test_config.test_pattern)
+      project = Project.new(test_config.test_dir, test_config.test_file_pattern)
 
       @test_suite_name = test_config.test_suite_name
       @packages = project.packages
@@ -97,10 +97,20 @@ class TestConfig < Rake::Config
   def test_suite_file
     File.join(test_suite_dir, "#{test_suite_name}.as")
   end
+
+  def test_file_pattern
+    if file_pattern
+      File.join('**', "*#{file_pattern}*Test.as")
+    else
+      test_pattern
+    end
+  end
 end
 
 TestConfig.configure do |config|
+  config.add(:file_pattern, :required => false)
   config.add(:test_pattern, :default => File.join('**', '*Test.as'))
+
   config.add(:test_initializer, :required => false)
   config.add(:app_name, :default => 'App')
   config.add(:test_dir, :default => File.join('test', 'unit'))
