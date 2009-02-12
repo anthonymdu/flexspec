@@ -12,9 +12,7 @@ exclude-result-prefixes="str">
 </xsl:text>
 	<!-- <xsl:call-template name="properties"/> -->
 
-	<xsl:apply-templates select=".">
-		<xsl:with-param name="isConstructor" select="true"/>
-	</xsl:apply-templates>
+	<xsl:apply-templates select="constructors"/>
 	<xsl:call-template name="methods"/>
 <xsl:text>
 	}
@@ -55,20 +53,9 @@ exclude-result-prefixes="str">
 		<xsl:variable name="accessLevel">public</xsl:variable>
 		<xsl:for-each select="methods/method[@accessLevel=$accessLevel]">
 			<xsl:sort select="translate(@name,'_','')" order="ascending" data-type="text"/>
-			<!-- <xsl:value-of select="@only"/>
-			<xsl:if test="not(@only='read-write')">
-				<xsl:text>-only</xsl:text>
-			</xsl:if>
-			<xsl:if test="not(@only='read-write')">
-				<xsl:text>-only</xsl:text>
-			</xsl:if>
-			<xsl:if test="not(@only='read-write')">
-				<xsl:text>-only</xsl:text>
-			</xsl:if> -->
-			<xsl:apply-templates select=".">
-				<xsl:with-param name="isConstructor" select="false"/>
-				<xsl:with-param name="accessLevel" select="public"/>
-			</xsl:apply-templates>	
+			<xsl:call-template name="method">
+				<xsl:with-param name="accessLevel" select="$accessLevel"/>
+			</xsl:call-template>	
 
 			<xsl:if test="position() != last()">
 				<xsl:text>
@@ -77,23 +64,21 @@ exclude-result-prefixes="str">
 		</xsl:for-each>
 	</xsl:template>
 
-	<xsl:template match="method | constructor">
+	<xsl:template name="method">
 		<xsl:param name="accessLevel"/>
-		<xsl:param name="isConstructor"/>
 
-		<xsl:text>		|</xsl:text>
+		<xsl:text>
+		</xsl:text>
 		<xsl:value-of select="$accessLevel"/>
-		<xsl:text>| override function </xsl:text>
+		<xsl:text> override function </xsl:text>
 		<xsl:value-of select="@name"/>
 		<xsl:text>(</xsl:text>
 		<xsl:call-template name="params">
 			<xsl:with-param name="includeTypes">true</xsl:with-param>
 		</xsl:call-template>
-		<xsl:text>			)</xsl:text>
-		<xsl:if test="$isConstructor = 'false'">
-			<xsl:text>:</xsl:text>
-			<xsl:value-of select="result/@type"/>
-		</xsl:if>
+		<xsl:text>)</xsl:text>
+		<xsl:text>:</xsl:text>
+		<xsl:value-of select="result/@type"/>
 		<xsl:text> {
 </xsl:text>
 		<xsl:text>			</xsl:text>
@@ -102,19 +87,44 @@ exclude-result-prefixes="str">
 		</xsl:if>
 		<xsl:text> invokeStub('</xsl:text>
 		<xsl:value-of select="@name"/>
-		<xsl:text>', </xsl:text>
+		<xsl:text>'</xsl:text>
 		<xsl:call-template name="params">
+			<xsl:with-param name="prependComma">true</xsl:with-param>
 			<xsl:with-param name="includeTypes">false</xsl:with-param>
 		</xsl:call-template>
 		<xsl:text>);
 		}</xsl:text>
 	</xsl:template>
 
-	<xsl:template name="params">
-		<xsl:param name="includeTypes"/>
+	<xsl:template match="constructor">
+		<xsl:param name="accessLevel"/>
 
+		<xsl:text>public function </xsl:text>
+		<xsl:value-of select="@name"/>
+		<xsl:text>Stub(</xsl:text>
+		<xsl:call-template name="params">
+			<xsl:with-param name="includeTypes">true</xsl:with-param>
+		</xsl:call-template>
+		<xsl:text>)</xsl:text>
+		<xsl:text> {
+			super(</xsl:text>
+		<xsl:call-template name="params">
+			<xsl:with-param name="includeTypes">false</xsl:with-param>
+		</xsl:call-template>
+		<xsl:text>);
+		}
+</xsl:text>
+	</xsl:template>
+
+
+	<xsl:template name="params">
+		<xsl:param name="prependComma">false</xsl:param>
+		<xsl:param name="includeTypes"/>
 		<xsl:for-each select="params/param">
 			<xsl:if test="position()>1">
+				<xsl:text>, </xsl:text>
+			</xsl:if>
+			<xsl:if test="position()=1 and $prependComma = 'true'">
 				<xsl:text>, </xsl:text>
 			</xsl:if>
 			<xsl:choose>
