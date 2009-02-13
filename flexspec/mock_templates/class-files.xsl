@@ -28,7 +28,7 @@ exclude-result-prefixes="redirect str exslt">
 	</xsl:variable>
 
 	<xsl:template match="/">
-		<xsl:for-each select="//asClass">
+		<xsl:for-each select="//asClass[@type='class']">
 			<xsl:sort select="@name" order="ascending" />
 
 			<xsl:variable name="stubName"><xsl:value-of select="@name"/>Stub</xsl:variable>
