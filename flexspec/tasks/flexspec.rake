@@ -74,7 +74,7 @@ FlexspecConfig.configure do |config|
   # config.add(:install_location, :default => 'spec')
   config.add(:libs_dir_name, :default => 'lib')
   config.add(:repo_location, :default => 'git://github.com/moneypools/flexspec.git')
-  config.add(:files_of_interest, :default => ['tasks', 'includes'])
+  config.add(:files_of_interest, :default => ['tasks', 'includes', 'mock_templates'])
   config.add(:swc_file, :default => File.join('bin', 'flexspec.swc'))
   config.add(:local_cache, :default => File.join('tmp', 'flexspec'))
   config.add(:update_target)
