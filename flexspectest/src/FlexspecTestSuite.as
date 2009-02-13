@@ -18,12 +18,13 @@ package {
 
 		protected function addTests():void {
 			// com.blchq.mock			
+			addTestSuite(MessageExpectationTest)
 			addTestSuite(MockTestCaseTest)
 			addTestSuite(MockUtilityTest)
 			addTestSuite(StubbingTest)
 
 			// com.blchq.unit			
-			addTestSuite(TestCaseExtTest)
+			addTestSuite(TestCaseWithMoreAssertionsTest)
 
 		}
 	}

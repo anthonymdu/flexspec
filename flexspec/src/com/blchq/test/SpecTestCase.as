@@ -1,7 +1,7 @@
 package com.blchq.test {
-	import flexunit.framework.TestCase;
+	import com.blchq.unit.TestCaseWithMoreAssertions;
 	
-	public class SpecTestCase extends TestCase {
+	public class SpecTestCase extends TestCaseWithMoreAssertions {
 		private var dynamicTests:Object = {};
 		private var describeStack:Array = [];
 		private var _setupContexts:Array = [];
@@ -21,7 +21,7 @@ package com.blchq.test {
 				methodNames.push(name);
 			}
 			
-			return methodNames;
+			return methodNames.sort();
 		}
 		
 		public override function runStart():void {
@@ -45,7 +45,7 @@ package com.blchq.test {
 	    	}
 			super.runFinish();
 		}
-		
+
 		protected function describe(description:String, block:Function):void {
 			describeStack.push(description);
 			

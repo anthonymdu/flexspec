@@ -11,12 +11,12 @@ package com.blchq.mock {
 			
 			for each (var methodInfo:XML in typeInfo.method) {
 				if (methodInfo.attribute('declaredBy') == typeName) {
-					methods.push(methodInfo.attribute('name'));
+					methods.push(methodInfo.attribute('name').toString());
 				}
 			}
 			for each (methodInfo in typeInfo.accessor) {
 				if (methodInfo.attribute('declaredBy') == typeName) {
-					methods.push(methodInfo.attribute('name'));
+					methods.push(methodInfo.attribute('name').toString());
 				}
 			}
 			return methods;
