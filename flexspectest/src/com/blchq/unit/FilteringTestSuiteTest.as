@@ -16,6 +16,22 @@ package com.blchq.unit {
 					var filteringSuite:FilteringTestSuite = new FilteringTestSuite(null, {testPattern: 'SomethingElse'});
 					assertArrayEquals([], filteringSuite.getTests());
 				});
+
+				it('should not be case sensitive', function():void {
+					var suiteClass:Class = FilteringTestSuiteTest;
+					var filteringSuite:FilteringTestSuite = new FilteringTestSuite(null, {testPattern: 'filtering'});
+
+					filteringSuite.addTestSuite(suiteClass);
+					assertEquals(1, filteringSuite.testArrayList.length());
+				});
+
+				it('should allow a regexp', function():void {
+					var suiteClass:Class = FilteringTestSuiteTest;
+					var filteringSuite:FilteringTestSuite = new FilteringTestSuite(null, {testPattern: '(filtering|other)'});
+
+					filteringSuite.addTestSuite(suiteClass);
+					assertEquals(1, filteringSuite.testArrayList.length());
+				});
 			});
 		}
 	}

@@ -12,11 +12,13 @@ package com.blchq.unit {
 			super(param);
 
 			filteringParams ||= Application.application.parameters;
-			_testPattern = filteringParams['testPattern'];
+			if (filteringParams['testPattern']) {
+				_testPattern = filteringParams['testPattern'].toLowerCase();
+			}
 		}
 
 		public override function addTestSuite(testClass:Class):void {
-			if (!_testPattern || getQualifiedClassName(testClass).match(_testPattern)) {
+			if (!_testPattern || getQualifiedClassName(testClass).toLowerCase().match(_testPattern)) {
 				super.addTestSuite(testClass);
 			}
 		}
