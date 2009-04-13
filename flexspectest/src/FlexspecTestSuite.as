@@ -1,6 +1,4 @@
 package {
-	import flexunit.framework.TestSuite;
-
 	import com.blchq.mock.*;
 	import com.blchq.unit.*;
 
@@ -9,7 +7,7 @@ package {
 		are going to be blown away next time it is generated, so don't edit it if you
 		want to keep your changes around.
 	*/
-	public class FlexspecTestSuite extends TestSuite {
+	public class FlexspecTestSuite extends FilteringTestSuite {
 		public function FlexspecTestSuite(param:Object=null) {
 			super(param);
 						

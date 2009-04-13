@@ -1,5 +1,5 @@
 package {
-	import flexunit.framework.TestSuite;
+	import com.blchq.unit.FilteringTestSuite;
 
 <% @packages.each do |package| %>
 	import <%= package %>.*;
@@ -10,7 +10,7 @@ package {
 		are going to be blown away next time it is generated, so don't edit it if you
 		want to keep your changes around.
 	*/
-	public class <%= @test_suite_name %> extends TestSuite {
+	public class <%= @test_suite_name %> extends FilteringTestSuite {
 		public function <%= @test_suite_name %>(param:Object=null) {
 			super(param);
 			<% if @test_initializer %>new <%= @test_initializer %>();<% end %>

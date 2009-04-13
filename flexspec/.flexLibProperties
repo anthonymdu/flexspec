@@ -30,6 +30,7 @@
 <classEntry path="flexunit.framework.TestListener"/>
 <classEntry path="flexunit.flexui.controls.right.SelectedTestCaseForm"/>
 <classEntry path="com.blchq.unit.TestCaseExt"/>
+<classEntry path="com.blchq.unit.FilteringTestSuite"/>
 <classEntry path="flexunit.flexui.data.AbstractRowData"/>
 <classEntry path="flexunit.flexui.controls.Title"/>
 <classEntry path="flexunit.flexui.patterns.AssertUndefinedPattern"/>
@@ -48,8 +49,8 @@
 <classEntry path="flexunit.framework.EventfulTestCaseListener"/>
 <classEntry path="flexunit.flexui.data.filter.TestfFunctionStatuses"/>
 <classEntry path="com.blchq.mock.MockExpectation"/>
-<classEntry path="com.blchq.unit.TestCaseWithMoreAssertions"/>
 <classEntry path="flexunit.flexui.data.TestFunctionRowData"/>
+<classEntry path="com.blchq.unit.TestCaseWithMoreAssertions"/>
 <classEntry path="flexunit.flexui.data.filter.AllTestFunctionStatus"/>
 <classEntry path="flexunit.framework.Protectable"/>
 <classEntry path="flexunit.textui.ResultPrinter"/>
@@ -69,6 +70,7 @@
 <classEntry path="FlexUnitTestRunnerApplication"/>
 <classEntry path="flexunit.flexui.controls.right.TestsComplete"/>
 <classEntry path="flexunit.utils.Iterator"/>
+<classEntry path="com.blchq.mock.MessageExpectation"/>
 <classEntry path="flexunit.utils.CollectionIterator"/>
 <classEntry path="flexunit.runner.BaseTestRunner"/>
 <classEntry path="flexunit.flexui.event.TestRunnerBasePresentationModelProperyChangedEvent"/>
