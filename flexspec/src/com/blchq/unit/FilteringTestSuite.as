@@ -11,7 +11,7 @@ package com.blchq.unit {
 		public function FilteringTestSuite(param:Object=null, filteringParams:Object=null) {
 			super(param);
 
-			filteringParams ||= Application.application.parameters['testPattern'];
+			filteringParams ||= Application.application.parameters;
 			_testPattern = filteringParams['testPattern'];
 		}
 

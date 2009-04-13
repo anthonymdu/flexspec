@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <FlexUnitTestRunnerApplication
 	xmlns="*"
 	xmlns:mx="http://www.adobe.com/2006/mxml"
@@ -5,7 +6,7 @@
 	<mx:Script>
 		<![CDATA[
 			private function buildTestSuite():void {
-				super.testSuite = new <%= @test_suite_name %>(null, parameters);
+				testSuite = new <%= @test_suite_name %>()
 			}
 		]]>
 	</mx:Script>

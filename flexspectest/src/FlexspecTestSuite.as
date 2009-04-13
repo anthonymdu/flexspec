@@ -1,4 +1,6 @@
 package {
+	import com.blchq.unit.FilteringTestSuite;
+
 	import com.blchq.mock.*;
 	import com.blchq.unit.*;
 
@@ -22,6 +24,7 @@ package {
 			addTestSuite(StubbingTest)
 
 			// com.blchq.unit			
+			addTestSuite(FilteringTestSuiteTest)
 			addTestSuite(TestCaseWithMoreAssertionsTest)
 
 		}

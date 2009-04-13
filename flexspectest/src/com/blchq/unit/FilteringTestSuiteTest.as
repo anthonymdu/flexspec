@@ -9,7 +9,7 @@ package com.blchq.unit {
 					var filteringSuite:FilteringTestSuite = new FilteringTestSuite(null, {testPattern: 'Filtering'});
 
 					filteringSuite.addTestSuite(suiteClass);
-					assertArrayEquals([], filteringSuite.getTests());
+					assertEquals(1, filteringSuite.testArrayList.length());
 				});
 
 				it('should not add test not matching pattern', function():void {
